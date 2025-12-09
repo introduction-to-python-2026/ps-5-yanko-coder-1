@@ -1,39 +1,50 @@
-import re
+def split_before_each_uppercases(formula):
+  start, end = 0,0
+  split_formula = []
+  for i,value in enumerate(formula):
+    if i == 0:
+     continue
+    if value.isupper():
+      end = i
+      split_formula.append(formula[start:end])
+      start = end
+      if i == len(formula)-1:
+         split_formula.append(formula[-1])
+    elif i == len(formula)-1:
+       split_formula.append(formula[start:])
+  return split_formula
 
-def split_before_uppercases(formula):
-    """
-    Splits a chemical formula (string) into a list of elements based on uppercase letters.
-    Example: 'Fe2O3' -> ['Fe2', 'O3']
-    """
-    return re.findall(r'[A-Z][a-z]\d', formula)
 
-def split_at_digit(element_string):
-    """
-    Splits an element string into a tuple of (element name, count).
-    Example: 'Fe2' -> ('Fe', 2), 'O' -> ('O', 1)
-    """
-    match = re.match(r"([A-Za-z]+)(\d*)", element_string)
-    if match:
-        name = match.group(1)
-        number_str = match.group(2)
-        count = int(number_str) if number_str else 1
-        return name, count
-    return element_string, 1
+def split_at_digit(formula):
+  for i,value in enumerate(formula):
+     x = value.isdigit()
+     if x:
+        break
+  if x:
+     letters = formula[:i]
+     digits = int(formula[i:])
+  else:
+     letters = formula
+     digits = 1
+  return letters, digits
+
 
 def count_atoms_in_molecule(molecular_formula):
     """Takes a molecular formula (string) and returns a dictionary of atom counts.
-    Example: 'H2O' -> {'H': 2, 'O': 1}"""
-    
-    # Step 1: Initialize an empty dictionary
+    Example: 'H2O' → {'H': 2, 'O': 1}"""
+
+    # Step 1: Initialize an empty dictionary to store atom counts
     atom_counts = {}
 
-    # שימוש בפונקציה split_before_uppercases שמימשנו למעלה
-    for atom in split_before_uppercases(molecular_formula):
-        # שימוש בפונקציה split_at_digit שמימשנו למעלה
-        atom_name, atom_count = split_at_digit(atom)
-        
-        # Step 2: Update the dictionary
-        atom_counts[atom_name] = atom_counts.get(atom_name, 0) + atom_count
+    # Split formula into segments at each uppercase letter
+    segments = split_before_each_uppercases(molecular_formula)
+
+    for seg in segments:
+        # Extract the atom and its count (default 1)
+        atom, count = split_at_digit(seg)
+
+        # Step 2: Update the dictionary with the atom name and count
+        atom_counts[atom] = atom_counts.get(atom, 0) + count
 
     # Step 3: Return the completed dictionary
     return atom_counts
