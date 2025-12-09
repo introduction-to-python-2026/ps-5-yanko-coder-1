@@ -1,4 +1,4 @@
-from  SymPy import symbols, Eq, isinstance,  solve as sympy_solve
+from  SymPy import symbols, Eq,  solve as sympy_solve
 
 # רשימת היסודות
 ELEMENTS = [
