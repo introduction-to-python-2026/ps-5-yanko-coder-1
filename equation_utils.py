@@ -1,4 +1,4 @@
-from  SymPy import symbols, Eq,  solve as sympy_solve
+from  SymPy import symbols, Eq, solve 
 
 # רשימת היסודות
 ELEMENTS = [
@@ -45,7 +45,7 @@ def build_equations(reactant_atoms, product_atoms):
 
 def my_solve(equations, coefficients):
     """Solves the system of equations for the coefficients of the reaction."""
-    solution = sympy_solve(equations, coefficients)
+    solution = solve(equations, coefficients)
 
     if isinstance(solution, dict) and len(solution) == len(coefficients):
         coefficient_values = []
