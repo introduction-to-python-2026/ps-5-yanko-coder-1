@@ -1,5 +1,5 @@
-from string_utils import parse_chemical_reaction, count_atoms_in_reaction
-import equation_utils
+from string_utils import *
+import equation_utils import *
 
 
 def balance_reaction(reaction): #"Fe2O3 + H2 -> Fe + H2O"
