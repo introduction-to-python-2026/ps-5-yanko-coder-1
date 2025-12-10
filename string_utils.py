@@ -44,7 +44,10 @@ def count_atoms_in_molecule(molecular_formula):
         atom, count = split_at_digit(seg)
 
         # Step 2: Update the dictionary with the atom name and count
-        atom_counts[atom] = atom_counts.get(atom, 0) + count
+        if atom in atom_counts:
+          atom_counts[atom] += count
+        else:
+          atom_counts[atom] = count 
 
     # Step 3: Return the completed dictionary
     return atom_counts
